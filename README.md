@@ -49,6 +49,18 @@ npm run dev
 npm run build
 ```
 
+## GitHub Pages
+
+This repo is configured for GitHub Pages deployment from the `main` branch via GitHub Actions.
+
+Expected production URL:
+
+```
+https://nbui23.github.io/art-history-study-app/
+```
+
+Because the site is deployed under a repository subpath, the Vite base path and image URLs are configured to work correctly on Pages.
+
 ## Data model
 
 Canonical artwork data lives in `src/data/artworks.ts`.

@@ -45,6 +45,10 @@ type ArtworkSource = Omit<Artwork, 'image'> & {
   imageExtension: ImageExtension;
 };
 
+const BASE_ASSET_URL = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
 /**
  * Canonical study data for the artworks from the user's exam slide deck.
  *
@@ -749,7 +753,7 @@ export const artworks: Artwork[] = artworkSources.map(({
   ...artwork
 }) => ({
   ...artwork,
-  image: `/images/${imageSlug}.${imageExtension}`,
+  image: `${BASE_ASSET_URL}images/${imageSlug}.${imageExtension}`,
 }));
 
 export const EXAM_CATEGORY_OPTIONS = [
