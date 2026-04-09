@@ -5,7 +5,7 @@ import { CompareView } from "./components/CompareView";
 import { CramSheet } from "./components/CramSheet";
 import { MovementFilter } from "./components/MovementFilter";
 import { QuizPanel } from "./components/QuizPanel";
-import { CategoryProgressStat, StudyHeader } from "./components/StudyHeader";
+import { CategoryProgressStat, CategorySnapshot, StudyHeader } from "./components/StudyHeader";
 import { EXAM_CATEGORY_OPTIONS, artworks } from "./data/artworks";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { QuizNotes, QuizRating, ReviewStatus, StudyMode } from "./types";
@@ -282,7 +282,7 @@ function App() {
       : "No artworks match the current search. Try clearing the search query.";
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(186,230,253,0.24),_transparent_36%),linear-gradient(180deg,_#fafaf9_0%,_#f5f5f4_100%)]">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.16),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_48%,_#111827_100%)]">
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
         <StudyHeader
           mode={mode}
@@ -291,7 +291,6 @@ function App() {
           filteredCount={filteredArtworks.length}
           needReviewCount={reviewCounts.needReview}
           confidentCount={reviewCounts.confident}
-          categoryStats={categoryStats}
         />
 
         <MovementFilter
@@ -387,10 +386,12 @@ function App() {
 
         {mode === "cram" && <CramSheet artworks={filteredArtworks} />}
 
-        <footer className="panel flex flex-col gap-3 px-5 py-4 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <CategorySnapshot categoryStats={categoryStats} />
+
+        <footer className="panel flex flex-col gap-3 px-5 py-4 text-sm text-slate-300 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p>
-            Canonical artwork metadata, image paths, and <code className="rounded bg-stone-100 px-1.5 py-0.5">examCategory</code> now come from{" "}
-            <code className="rounded bg-stone-100 px-1.5 py-0.5">src/data/artworks.ts</code>.
+            Canonical artwork metadata, image paths, and <code className="rounded bg-slate-800 px-1.5 py-0.5 text-slate-100">examCategory</code> now come from{" "}
+            <code className="rounded bg-slate-800 px-1.5 py-0.5 text-slate-100">src/data/artworks.ts</code>.
           </p>
           <div className="pill">Image directory: /public/images</div>
         </footer>
@@ -400,7 +401,7 @@ function App() {
 }
 
 function EmptyState({ message }: { message: string }) {
-  return <div className="panel px-6 py-12 text-center text-sm text-slate-600">{message}</div>;
+  return <div className="panel px-6 py-12 text-center text-sm text-slate-300">{message}</div>;
 }
 
 export default App;

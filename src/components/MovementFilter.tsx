@@ -17,12 +17,12 @@ export function MovementFilter({
 }: MovementFilterProps) {
   return (
     <section className="panel grid gap-4 px-4 py-4 sm:px-6 lg:grid-cols-[260px_minmax(0,1fr)_auto] lg:items-end">
-      <label className="space-y-2 text-sm font-medium text-slate-700">
-        <span className="block text-xs uppercase tracking-[0.18em] text-slate-500">Exam category</span>
+      <label className="space-y-2 text-sm font-medium text-slate-200">
+        <span className="block text-xs uppercase tracking-[0.18em] text-slate-400">Exam category</span>
         <select
           value={selectedCategory}
           onChange={(event) => onCategoryChange(event.target.value)}
-          className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-slate-800"
+          className="w-full rounded-2xl border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-slate-100"
         >
           {categories.map((category) => (
             <option key={category} value={category}>
@@ -32,13 +32,13 @@ export function MovementFilter({
         </select>
       </label>
 
-      <label className="space-y-2 text-sm font-medium text-slate-700">
-        <span className="block text-xs uppercase tracking-[0.18em] text-slate-500">Search</span>
+      <label className="space-y-2 text-sm font-medium text-slate-200">
+        <span className="block text-xs uppercase tracking-[0.18em] text-slate-400">Search</span>
         <input
           value={searchQuery}
           onChange={(event) => onSearchChange(event.target.value)}
           placeholder="Search title, artist, category, or movement"
-          className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400"
+          className="w-full rounded-2xl border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500"
         />
       </label>
 

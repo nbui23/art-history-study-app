@@ -10,13 +10,13 @@ export function ProgressMeter({ current, total, label }: ProgressMeterProps) {
 
   return (
     <div className="space-y-2">
-      <div className="flex items-center justify-between text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
+      <div className="flex items-center justify-between text-xs font-medium uppercase tracking-[0.18em] text-slate-400">
         <span>{label}</span>
         <span>
           {Math.min(current, total)}/{total}
         </span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-stone-200">
+      <div className="h-2 overflow-hidden rounded-full bg-slate-800">
         <div
           className="h-full rounded-full bg-sky-600 transition-all"
           style={{ width: `${percent}%` }}

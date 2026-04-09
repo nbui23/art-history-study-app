@@ -57,26 +57,26 @@ export function QuizPanel({
       <div className="panel flex flex-col gap-5 p-5 sm:p-6">
         <div className="flex flex-wrap items-center gap-2">
           {artwork.year ? <div className="pill">{artwork.year}</div> : null}
-          <label className="ml-auto flex items-center gap-2 rounded-full bg-stone-100 px-3 py-2 text-sm text-slate-600">
+          <label className="ml-auto flex items-center gap-2 rounded-full bg-slate-800 px-3 py-2 text-sm text-slate-300">
             <input
               type="checkbox"
               checked={reviewOnlyMissed}
               onChange={(event) => onToggleReviewOnly(event.target.checked)}
-              className="h-4 w-4 rounded border-stone-300"
+              className="h-4 w-4 rounded border-slate-700"
             />
             Review only missed cards
           </label>
         </div>
 
         <div className="space-y-3">
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Prompt</div>
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Prompt</div>
           <div>
-            <h2 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">{artwork.title}</h2>
-            <p className="mt-2 text-base text-slate-600">{artwork.artist}</p>
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">{artwork.title}</h2>
+            <p className="mt-2 text-base text-slate-300">{artwork.artist}</p>
           </div>
         </div>
 
-        <ArtworkImage src={artwork.image} alt={`${artwork.title} by ${artwork.artist}`} className="max-h-[24rem] bg-stone-200" />
+        <ArtworkImage src={artwork.image} alt={`${artwork.title} by ${artwork.artist}`} className="max-h-[24rem] bg-slate-800" />
 
         <div className="grid gap-3 sm:grid-cols-4">
           <SessionStat label="Score" value={String(score)} />
@@ -87,7 +87,7 @@ export function QuizPanel({
 
         <ProgressMeter current={index + 1} total={total} label="Quiz progress" />
 
-        <div className="flex flex-wrap gap-2 border-t border-stone-200 pt-5">
+        <div className="flex flex-wrap gap-2 border-t border-slate-800 pt-5">
           <button type="button" onClick={onReveal} className="button-primary">
             {revealed ? "Hide answer" : "Show answer"}
           </button>
@@ -105,8 +105,8 @@ export function QuizPanel({
 
       <div className="panel flex flex-col gap-5 p-5 sm:p-6">
         <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Your recall notes</div>
-          <p className="mt-2 text-sm leading-6 text-slate-600">
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Your recall notes</div>
+          <p className="mt-2 text-sm leading-6 text-slate-300">
             Test yourself first, then reveal the answer and compare your notes against the study guide.
           </p>
         </div>
@@ -154,11 +154,11 @@ export function QuizPanel({
           onChange={(value) => onNotesChange("importance", value)}
         />
 
-        <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5">
+        <div className="rounded-3xl border border-slate-800 bg-slate-950 p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Reference answer</div>
-              <p className="mt-1 text-sm text-slate-600">
+              <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Reference answer</div>
+              <p className="mt-1 text-sm text-slate-300">
                 {revealed ? "Compare your response, then self-rate." : "Hidden until you show the answer."}
               </p>
             </div>
@@ -185,12 +185,12 @@ export function QuizPanel({
                   <div className="flex flex-wrap gap-2">
                     {(artwork.themes ?? []).length ? (
                       artwork.themes?.map((theme) => (
-                        <span key={theme} className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-slate-700">
+                        <span key={theme} className="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-200">
                           {theme}
                         </span>
                       ))
                     ) : (
-                      <span className="text-sm text-slate-500">No themes yet.</span>
+                      <span className="text-sm text-slate-400">No themes yet.</span>
                     )}
                   </div>
                 </AnswerCard>
@@ -205,19 +205,19 @@ export function QuizPanel({
                 </AnswerCard>
                 {artwork.memoryHook ? (
                   <AnswerCard title="Memory hook" accent>
-                    <p className="font-medium text-slate-900">{artwork.memoryHook}</p>
+                    <p className="font-medium text-slate-100">{artwork.memoryHook}</p>
                   </AnswerCard>
                 ) : null}
               </div>
             </div>
           ) : (
-            <div className="mt-5 rounded-2xl border border-dashed border-stone-300 bg-white px-4 py-6 text-center text-sm text-slate-500">
+            <div className="mt-5 rounded-2xl border border-dashed border-slate-700 bg-slate-900 px-4 py-6 text-center text-sm text-slate-400">
               Hidden until you show the answer. Use Space to reveal/hide quickly while studying.
             </div>
           )}
         </div>
 
-        <div className="flex flex-wrap gap-2 border-t border-stone-200 pt-5">
+        <div className="flex flex-wrap gap-2 border-t border-slate-800 pt-5">
           {(Object.keys(ratingLabels) as QuizRating[]).map((rating) => (
             <button
               key={rating}
@@ -237,9 +237,9 @@ export function QuizPanel({
 
 function SessionStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl bg-stone-100 px-4 py-3">
-      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{label}</div>
-      <div className="mt-1 text-lg font-semibold text-slate-900">{value}</div>
+    <div className="rounded-2xl bg-slate-800 px-4 py-3">
+      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">{label}</div>
+      <div className="mt-1 text-lg font-semibold text-slate-100">{value}</div>
     </div>
   );
 }
@@ -258,22 +258,22 @@ function Field({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="space-y-2 text-sm font-medium text-slate-700">
-      <span className="block text-xs uppercase tracking-[0.18em] text-slate-500">{label}</span>
+    <label className="space-y-2 text-sm font-medium text-slate-200">
+      <span className="block text-xs uppercase tracking-[0.18em] text-slate-400">{label}</span>
       {multiline ? (
         <textarea
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
           rows={4}
-          className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm leading-6 text-slate-800 placeholder:text-slate-400"
+          className="w-full rounded-2xl border border-slate-800 bg-slate-900 px-4 py-3 text-sm leading-6 text-slate-100 placeholder:text-slate-500"
         />
       ) : (
         <input
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
-          className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400"
+          className="w-full rounded-2xl border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500"
         />
       )}
     </label>
@@ -282,16 +282,16 @@ function Field({
 
 function AnswerCard({ title, children, accent = false }: { title: string; children: ReactNode; accent?: boolean }) {
   return (
-    <section className={accent ? "rounded-3xl border border-sky-100 bg-sky-50 p-5" : "rounded-3xl border border-stone-200 bg-white p-5 shadow-sm"}>
-      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{title}</div>
-      <div className="mt-3 text-sm leading-7 text-slate-700">{children}</div>
+    <section className={accent ? "rounded-3xl border border-sky-100 bg-sky-50 p-5" : "rounded-3xl border border-slate-800 bg-slate-900 p-5 shadow-sm"}>
+      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">{title}</div>
+      <div className="mt-3 text-sm leading-7 text-slate-200">{children}</div>
     </section>
   );
 }
 
 function BulletList({ items, emptyLabel }: { items?: string[]; emptyLabel: string }) {
   if (!items?.length) {
-    return <p className="text-sm text-slate-500">{emptyLabel}</p>;
+    return <p className="text-sm text-slate-400">{emptyLabel}</p>;
   }
 
   return (

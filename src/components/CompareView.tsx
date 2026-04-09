@@ -12,7 +12,7 @@ interface CompareViewProps {
 export function CompareView({ artworks, leftId, rightId, onSelectLeft, onSelectRight }: CompareViewProps) {
   if (artworks.length < 2) {
     return (
-      <div className="panel px-6 py-10 text-center text-sm text-slate-600">
+      <div className="panel px-6 py-10 text-center text-sm text-slate-300">
         Need at least two artworks in the current filter to compare side by side.
       </div>
     );
@@ -45,8 +45,8 @@ export function CompareView({ artworks, leftId, rightId, onSelectLeft, onSelectR
 
       <div className="panel space-y-4 px-5 py-5 sm:px-6">
         <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Quick compare takeaways</div>
-          <h3 className="mt-2 text-xl font-semibold tracking-tight text-slate-950">What connects them?</h3>
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Quick compare takeaways</div>
+          <h3 className="mt-2 text-xl font-semibold tracking-tight text-slate-50">What connects them?</h3>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -70,12 +70,12 @@ function SelectCard({
   onChange: (id: string) => void;
 }) {
   return (
-    <label className="space-y-2 text-sm font-medium text-slate-700">
-      <span className="block text-xs uppercase tracking-[0.18em] text-slate-500">{label}</span>
+    <label className="space-y-2 text-sm font-medium text-slate-200">
+      <span className="block text-xs uppercase tracking-[0.18em] text-slate-400">{label}</span>
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-slate-800"
+        className="w-full rounded-2xl border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-slate-100"
       >
         {artworks.map((artwork) => (
           <option key={artwork.id} value={artwork.id}>
@@ -90,8 +90,8 @@ function SelectCard({
 function CompareColumn({ artwork }: { artwork: Artwork }) {
   return (
     <article className="panel overflow-hidden">
-      <div className="border-b border-stone-200 bg-stone-100/70 p-4 sm:p-5">
-        <ArtworkImage src={artwork.image} alt={`${artwork.title} by ${artwork.artist}`} className="max-h-[18rem] bg-stone-200" />
+      <div className="border-b border-slate-800 bg-slate-900/70 p-4 sm:p-5">
+        <ArtworkImage src={artwork.image} alt={`${artwork.title} by ${artwork.artist}`} className="max-h-[18rem] bg-slate-800" />
       </div>
       <div className="space-y-4 p-5 sm:p-6">
         <div className="flex flex-wrap gap-2">
@@ -99,8 +99,8 @@ function CompareColumn({ artwork }: { artwork: Artwork }) {
           {artwork.year ? <div className="pill">{artwork.year}</div> : null}
         </div>
         <div>
-          <h3 className="text-2xl font-semibold tracking-tight text-slate-950">{artwork.title}</h3>
-          <p className="mt-2 text-slate-600">{artwork.artist}</p>
+          <h3 className="text-2xl font-semibold tracking-tight text-slate-50">{artwork.title}</h3>
+          <p className="mt-2 text-slate-300">{artwork.artist}</p>
         </div>
 
         <CompareRow label="Movement / style" value={artwork.movementStyle} />
@@ -117,8 +117,8 @@ function CompareColumn({ artwork }: { artwork: Artwork }) {
 
 function CompareRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="space-y-1 text-sm leading-6 text-slate-700">
-      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{label}</div>
+    <div className="space-y-1 text-sm leading-6 text-slate-200">
+      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">{label}</div>
       <p>{value}</p>
     </div>
   );
@@ -126,9 +126,9 @@ function CompareRow({ label, value }: { label: string; value: string }) {
 
 function InsightCard({ title, items }: { title: string; items: string[] }) {
   return (
-    <div className="rounded-3xl bg-stone-100 p-4">
-      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{title}</div>
-      <ul className="mt-3 space-y-2 text-sm text-slate-700">
+    <div className="rounded-3xl bg-slate-800 p-4">
+      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">{title}</div>
+      <ul className="mt-3 space-y-2 text-sm text-slate-200">
         {items.map((item) => (
           <li key={item} className="flex gap-2">
             <span className="mt-2 h-1.5 w-1.5 rounded-full bg-sky-600" />
