@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Artwork, QuizNotes, QuizRating } from "../types";
 import { ArtworkImage } from "./ArtworkImage";
 import { ProgressMeter } from "./ProgressMeter";
@@ -77,8 +78,6 @@ export function QuizPanel({
 
         <ArtworkImage src={artwork.image} alt={`${artwork.title} by ${artwork.artist}`} className="max-h-[24rem] bg-stone-200" />
 
-        <ProgressMeter current={index + 1} total={total} label="Quiz progress" />
-
         <div className="grid gap-3 sm:grid-cols-4">
           <SessionStat label="Score" value={String(score)} />
           <SessionStat label="Got it" value={String(ratingCounts["got-it"])} />
@@ -86,9 +85,11 @@ export function QuizPanel({
           <SessionStat label="Missed" value={String(ratingCounts.missed)} />
         </div>
 
+        <ProgressMeter current={index + 1} total={total} label="Quiz progress" />
+
         <div className="flex flex-wrap gap-2 border-t border-stone-200 pt-5">
           <button type="button" onClick={onReveal} className="button-primary">
-            {revealed ? "Hide answer" : "Reveal answer"}
+            {revealed ? "Hide answer" : "Show answer"}
           </button>
           <button type="button" onClick={onPrevious} className="button-ghost">
             ← Previous
@@ -105,8 +106,8 @@ export function QuizPanel({
       <div className="panel flex flex-col gap-5 p-5 sm:p-6">
         <div>
           <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Your recall notes</div>
-          <p className="mt-2 text-sm text-slate-600">
-            Speak your answer aloud or jot quick notes before revealing the reference answer.
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            Test yourself first, then reveal the answer and compare your notes against the study guide.
           </p>
         </div>
 
@@ -158,26 +159,60 @@ export function QuizPanel({
             <div>
               <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Reference answer</div>
               <p className="mt-1 text-sm text-slate-600">
-                {revealed ? "Compare your response, then self-rate." : "Press Space or use the button to reveal."}
+                {revealed ? "Compare your response, then self-rate." : "Hidden until you show the answer."}
               </p>
             </div>
           </div>
 
           {revealed ? (
-            <div className="mt-5 space-y-4 text-sm leading-6 text-slate-700">
-              <AnswerRow label="Exam category" content={artwork.examCategory} />
-              <AnswerRow label="Movement / style" content={artwork.movementStyle} />
-              <AnswerRow label="Type of work" content={artwork.typeOfWork} />
-              <AnswerRow label="Visual clues" content={joinList(artwork.visualClues)} />
-              <AnswerRow label="Themes" content={joinList(artwork.themes)} />
-              <AnswerRow label="Importance to movement" content={artwork.importanceToMovement} />
-              <AnswerRow label="Importance to art history" content={artwork.importanceToArtHistory} />
-              <AnswerRow label="Main reasons it is important" content={joinList(artwork.mainReasonsImportant)} />
-              {artwork.memoryHook ? <AnswerRow label="Memory hook" content={artwork.memoryHook} /> : null}
+            <div className="mt-5 space-y-4">
+              <div className="rounded-2xl border border-sky-100 bg-sky-50 px-4 py-3 text-sm text-sky-900">
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700">Exam category</div>
+                <p className="mt-1 font-medium">{artwork.examCategory}</p>
+              </div>
+
+              <div className="space-y-4">
+                <AnswerCard title="Movement / style">
+                  <p>{artwork.movementStyle}</p>
+                </AnswerCard>
+                <AnswerCard title="Type of painting/work">
+                  <p>{artwork.typeOfWork}</p>
+                </AnswerCard>
+                <AnswerCard title="Visual clues">
+                  <BulletList items={artwork.visualClues} emptyLabel="No visual clues yet." />
+                </AnswerCard>
+                <AnswerCard title="Themes">
+                  <div className="flex flex-wrap gap-2">
+                    {(artwork.themes ?? []).length ? (
+                      artwork.themes?.map((theme) => (
+                        <span key={theme} className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-slate-700">
+                          {theme}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-sm text-slate-500">No themes yet.</span>
+                    )}
+                  </div>
+                </AnswerCard>
+                <AnswerCard title="Importance to the movement">
+                  <p>{artwork.importanceToMovement}</p>
+                </AnswerCard>
+                <AnswerCard title="Importance to art history">
+                  <p>{artwork.importanceToArtHistory}</p>
+                </AnswerCard>
+                <AnswerCard title="Main reasons it is important">
+                  <BulletList items={artwork.mainReasonsImportant} emptyLabel="No reasons yet." />
+                </AnswerCard>
+                {artwork.memoryHook ? (
+                  <AnswerCard title="Memory hook" accent>
+                    <p className="font-medium text-slate-900">{artwork.memoryHook}</p>
+                  </AnswerCard>
+                ) : null}
+              </div>
             </div>
           ) : (
             <div className="mt-5 rounded-2xl border border-dashed border-stone-300 bg-white px-4 py-6 text-center text-sm text-slate-500">
-              Hidden until you reveal the answer.
+              Hidden until you show the answer. Use Space to reveal/hide quickly while studying.
             </div>
           )}
         </div>
@@ -231,7 +266,7 @@ function Field({
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
           rows={4}
-          className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400"
+          className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm leading-6 text-slate-800 placeholder:text-slate-400"
         />
       ) : (
         <input
@@ -245,15 +280,28 @@ function Field({
   );
 }
 
-function AnswerRow({ label, content }: { label: string; content: string }) {
+function AnswerCard({ title, children, accent = false }: { title: string; children: ReactNode; accent?: boolean }) {
   return (
-    <div className="space-y-1">
-      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{label}</div>
-      <p>{content}</p>
-    </div>
+    <section className={accent ? "rounded-3xl border border-sky-100 bg-sky-50 p-5" : "rounded-3xl border border-stone-200 bg-white p-5 shadow-sm"}>
+      <div className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">{title}</div>
+      <div className="mt-3 text-sm leading-7 text-slate-700">{children}</div>
+    </section>
   );
 }
 
-function joinList(values?: string[]) {
-  return values?.length ? values.join(" • ") : "—";
+function BulletList({ items, emptyLabel }: { items?: string[]; emptyLabel: string }) {
+  if (!items?.length) {
+    return <p className="text-sm text-slate-500">{emptyLabel}</p>;
+  }
+
+  return (
+    <ul className="space-y-2">
+      {items.map((item) => (
+        <li key={item} className="flex items-start gap-3">
+          <span className="mt-2.5 h-1.5 w-1.5 rounded-full bg-sky-600" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
 }
